@@ -1,16 +1,41 @@
 version: 2.1
 orbs:
-  react: thefrontside/react@0.2.0
+  heroku: circleci/heroku@1.0.1
 workflows:
-  push:
+  heroku_deploy:
     jobs:
-      - react/install
-      - react/eslint:
+      - build
+      - heroku/deploy-via-git:
           requires:
-            - react/install
-      - react/test:
-          requires:
-            - react/install
-      - react/coverage:
-          requires:
-            - react/install
+            - build
+jobs:
+  build:
+    docker:
+      - image: circleci/node:12.9.1-browsers
+    steps:
+      - checkout # special step to check out source code to working directory
+
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          keys: 
+            - v1-repo-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Install dependencies with NPM
+          command: npm install # replace with `yarn install` if using yarn
+
+      - save_cache: # special step to save the dependency cache
+          key: v1-repo-{{ checksum "package-lock.json" }}
+          paths:
+            - "node_modules"
+
+      - run:
+          name: Run tests
+          # Runs jest with "--maxWorkers=2" argument to avoid OOM issues
+          command: npm test # replace with `yarn test` if using yarn
+
+      - store_artifacts: 
+          path: test-results
+
+      - store_test_results:
+          path: test-results
