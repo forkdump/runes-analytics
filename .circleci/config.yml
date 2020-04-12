@@ -5,9 +5,6 @@ workflows:
   heroku_deploy:
     jobs:
       - build
-      - heroku/deploy-via-git:
-          requires:
-            - build
 jobs:
   build:
     docker:
