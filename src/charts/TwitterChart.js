@@ -16,7 +16,7 @@ export default class TwitterChart extends PureComponent {
       <LineChart
         width={1200}
         height={400}
-        data={this.props.chartData}
+        data={this.props.dataToRender}
         margin={{
           top: 5, right: 30, left: 20, bottom: 5,
         }}

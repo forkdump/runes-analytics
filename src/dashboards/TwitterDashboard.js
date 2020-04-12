@@ -5,21 +5,33 @@ class TwitterDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-        chartData: [], 
         requestCompleted: false,
+        twitterUser: '',
+        userSubmitted: false,
+        dataToRender: []
     };
+    this.handleChange= this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  callAPI() {
-      console.log(this.props.userId);
-      const apiUrl = process.env.REACT_APP_RUNES_API_DOMAIN + "/api/v1/tweets/" + this.props.userId;
+  handleChange(event) {
+    this.setState({ twitterUser: event.target.value, userSubmitted: false, requestCompleted: false })
+  }   
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.callApi();
+    this.setState({ userSubmitted: true })
+  }
+
+  callApi() {
+      const apiUrl = process.env.REACT_APP_RUNES_API_DOMAIN + "/api/v1/tweets/" + this.state.twitterUser;
       fetch(apiUrl)
-          .then(res => res.json())
-          .then(res => this.setState({chartData: this.createDataPoints(res), requestCompleted: true}));
+          .then(response => response.json())
+          .then(response => this.setState({dataToRender: this.transformData(response), requestCompleted: true}));
   }
 
-  createDataPoints(data) {
-    console.log(data);
+  transformData(data) {
     return data
       .map(record => {
         const createdDate = new Date(Date.parse(record.created_at));
@@ -34,19 +46,28 @@ class TwitterDashboard extends Component {
       .sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
   }
 
-  componentDidMount() {
-      this.callAPI();
-  }
-
   renderTwitterChart() {
-    return <TwitterChart chartData={this.state.chartData}></TwitterChart>;
+    return <TwitterChart dataToRender={this.state.dataToRender}></TwitterChart>;
   }
 
   render() {
     return (
+    <div>
       <div>
-        {this.state.requestCompleted && this.renderTwitterChart()}
+        <form  className="pure-form twitter-form"
+                onSubmit={this.handleSubmit}>
+              <input type="text"
+                    placeholder="Twitter Username"
+                    name={this.state.twitterUser}  
+                    className="pure-input-rounded twitter-form-input"
+                    onChange={this.handleChange}  />
+              <div className="twitter-form-btn">
+                <input type="submit" className="button-success pure-button" value="Get" />
+              </div>
+          </form>
       </div>
+      {this.state.userSubmitted && this.state.requestCompleted && this.renderTwitterChart()}
+    </div>
     );
   }
 }
