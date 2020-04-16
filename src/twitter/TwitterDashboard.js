@@ -102,8 +102,8 @@ class TwitterDashboard extends Component {
 
   filterTweetsToRender() {
     const filteredTweets = this.state.tweets
-      .slice(-this.state.selectedMaxTweetsCount)
-      .filter(this.isTweetInSelectedDateRange);
+      .filter(this.isTweetInSelectedDateRange)
+      .slice(-this.state.selectedMaxTweetsCount);
     this.setState({
       tweetsToRender: filteredTweets
     });
@@ -137,7 +137,7 @@ class TwitterDashboard extends Component {
             className="max-tweets-selector"
             searchable={false}
             cleanable={false}
-            placeholder="Max Recent Tweets"
+            placeholder="Max Tweets"
             disabled={this.state.tweets.length === 0}
             data={MAX_TWEETS_LIST}
             onChange={this.handleMaxTweetsChange}
