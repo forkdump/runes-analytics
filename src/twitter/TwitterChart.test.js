@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect'
 
 import TwitterChart from './TwitterChart';
 
-test('it should render Twitter chart', () => {
+test('it should render twitter chart', () => {
   const { container, getByText } = render(<TwitterChart tweets={getMockChartData()} />);
   expect(container.querySelector(".recharts-line")).toBeInTheDocument();
   expect(getByText(/04\/01\/2020/)).toBeInTheDocument();
