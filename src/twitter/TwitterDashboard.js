@@ -143,6 +143,7 @@ class TwitterDashboard extends Component {
             onChange={this.handleMaxTweetsChange}
             value={this.state.selectedMaxTweetsCount} />
           <DateRangePicker
+            format="MM/DD/YYYY"
             placeholder="Chart Timeline"
             className="tweets-daterange-picker"
             showOneCalendar={true}
