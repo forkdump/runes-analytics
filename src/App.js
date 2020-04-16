@@ -11,7 +11,7 @@ class App extends Component {
       <div className="layout">
         <Navbar>
           <Navbar.Header>
-            <p className="navbar-brand logo">Runes Analytics</p>
+            <p className="navbar-brand logo">RUNES ANALYTICS</p>
           </Navbar.Header>
           <Navbar.Body>
             <Nav>
