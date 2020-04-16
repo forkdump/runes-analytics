@@ -2,21 +2,7 @@
   text-align: center;
 }
 
-.twitter-form {
-  padding: 20px 0 30px 70px;
-}
-
-.twitter-form-input {
-  border-radius: 2em 0 0 2em !important;
-}
-
-.twitter-form-btn {
-  display: inline;
-}
-
-.button-success {
-  background-color: rgb(66, 184, 255);
-  border-radius: 0 2em 2em 0;
-  color: white;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+.navbar-brand {
+  padding: 18px 20px;
+  display: inline-block;
 }

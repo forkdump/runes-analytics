@@ -4,25 +4,39 @@ import {
   } from 'recharts';
 
 export default class TwitterChart extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleChartClick = this.handleChartClick.bind(this);
+  }
 
   handleChartClick(data) {
+    console.log(data);
+    if (!this.isClickValid(data)) {
+      return;
+    }
     const url = data.activePayload[0].payload.url;
     window.open(url, '_blank');
   }
 
+  isClickValid(data) {
+    return data 
+        && data.activePayload 
+        && data.activePayload.length > 0 
+        && data.activePayload[0].payload 
+        && data.activePayload[0].payload.url;
+  }
+
   render() {
     return (
-    <ResponsiveContainer width="95%" height={500}>
+    <ResponsiveContainer width="95%" height={500} aspect={3}>
       <LineChart
-        width={1200}
-        height={400}
-        data={this.props.dataToRender}
+        data={this.props.tweets}
         margin={{
           top: 5, right: 30, left: 20, bottom: 5,
         }}
         onClick={this.handleChartClick}
       >
-        <XAxis dataKey="date" interval="preserveStartEnd" />
+        <XAxis dataKey="dateStr" interval="preserveStartEnd" />
         <YAxis />
         <Tooltip content={<TwitterTooltip/>}/>
         <Legend />
@@ -41,6 +55,10 @@ class TwitterTooltip extends PureComponent{
 
     if (active) {
       const { payload } = this.props;
+      if (!payload || payload.size === 0) {
+        return null;
+      }
+      const tweet = payload[0].payload;
       const tooltipStyle = {
         backgroundColor: '#b5e3ff',
         borderRadius: '10px',
@@ -53,9 +71,9 @@ class TwitterTooltip extends PureComponent{
       };
       return (
         <div className="twitter-tooltip" style={tooltipStyle}>
-          <p className="label" style={tooltipTextStyle}>{`${payload[0].payload.name}`}</p>
-          <p className="favorites" style={tooltipTextStyle}> {`Favorites: ${payload[0].payload.favorites}`}</p>
-          <p className="retweets" style={tooltipTextStyle}> {`Retweets: ${payload[0].payload.retweets}`}</p>
+          <p className="label" style={tooltipTextStyle}>{`${tweet.name}`}</p>
+          <p className="favorites" style={tooltipTextStyle}> {`Favorites: ${tweet.favorites}`}</p>
+          <p className="retweets" style={tooltipTextStyle}> {`Retweets: ${tweet.retweets}`}</p>
         </div>
       );
     }

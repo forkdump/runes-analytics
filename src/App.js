@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
-import TwitterDashboard from './dashboards/TwitterDashboard';
+import { Navbar, Nav } from 'rsuite';
+import 'rsuite/dist/styles/rsuite-default.css';
+
+import TwitterDashboard from './twitter/TwitterDashboard';
 
 class App extends Component {
-
-  renderTwitterDashboard() {
-    return 
-  }
 
   render() {
     return (
       <div className="layout">
-        <div className="header pure-menu pure-menu-horizontal">
-            <p className="pure-menu-heading">Runes Analytics</p>
-            <ul className="pure-menu-list">
-                <li className="pure-menu-item"><a href="#" className="pure-menu-link">Twitter</a></li>
-            </ul>
-        </div>
+        <Navbar>
+          <Navbar.Header>
+            <p className="navbar-brand logo">Runes Analytics</p>
+          </Navbar.Header>
+          <Navbar.Body>
+            <Nav>
+              <Nav.Item>Twitter</Nav.Item>
+            </Nav>
+          </Navbar.Body>
+        </Navbar>
         <div className="content">
-        <TwitterDashboard></TwitterDashboard>
+          <TwitterDashboard></TwitterDashboard>
         </div>
       </div>
     );

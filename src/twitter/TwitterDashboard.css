@@ -1,0 +1,23 @@
+.empty-twitter-data {
+  padding: 0 0 0 70px;
+  width: 350px;
+}
+
+.twitter-dashboard-controls {
+  padding: 25px 0 25px 70px;
+}
+
+.twitter-username {
+  width: 200px;
+  display: inline;
+}
+
+.max-tweets-selector {
+  width: 224px;
+  padding: 5px;
+}
+
+.tweets-daterange-picker {
+  width: 280px;
+  padding: 5px;
+}
