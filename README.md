@@ -7,9 +7,10 @@ Aggregate and visualize your data from social media in one place.
    1. The user tweets favorites, retweets are displayed on the chart.
    2. The user tweets can be filtered by date and number of posts.
 ## Local development
-1. Clone the project
-2. Run `npm install`
-3. Run the server: `npm start`
+1. Clone and run the backend locally [Runes Analytics Backend](https://github.com/liashenko/runes-analytics-backend)
+2. Clone this project
+3. Run `npm install`
+4. Run the frontend: `npm start`
 
 ### Running the tests
 - `npm test`
